@@ -6,8 +6,8 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
-from catboost import CatBoostClassifier
-from catboost import Pool
+#from catboost import CatBoostClassifier
+#from catboost import Pool
 
 def add_counts(df):
     tmp_card = df[["C1", "C2", "C3", "C4", "C5"]]
@@ -61,7 +61,7 @@ def preprocess_data(data):
     return df
 
 # Loading the Models
-cat_boost_model = pickle.load(open('cat_boost.pkl', 'rb'))
+#cat_boost_model = pickle.load(open('cat_boost.pkl', 'rb'))
 nn_model = pickle.load(open('nn.pkl', 'rb'))
 rf_model = pickle.load(open('rf.pkl', 'rb'))
 
@@ -87,15 +87,15 @@ def home():
     df = pd.DataFrame(arr, columns = ["S1", "C1", "S2", "C2", "S3", "C3", "S4", "C4", "S5", "C5"])
     df = preprocess_data(df)
 
-    cat_boost_pred = cat_boost_model.predict(data = df)[0][0]
+    #cat_boost_pred = cat_boost_model.predict(data = df)[0][0]
     nn_pred = nn_model.predict(df)[0]
     rf_pred = rf_model.predict(df)[0]
     
     #VOTING
     pred = 0
     
-    votes = [cat_boost_pred, nn_pred, nn_pred]
-    #votes = [nn_pred, nn_pred, nn_pred]
+    #votes = [cat_boost_pred, nn_pred, rf_pred]
+    votes = [nn_pred, nn_pred, rf_pred]
     agreements = [1, 1, 1]
     for i in range(len(votes)):
         for j in range(len(votes)):
